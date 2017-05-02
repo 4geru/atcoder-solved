@@ -6,7 +6,6 @@ require 'json'
 get '/' do
   @users = [
     'rika0384',
-    'yoshikawa1118',
     'shumon_84',
     'ixmel_rd',
     'tuki_remon',
@@ -22,7 +21,6 @@ get '/' do
     'kaito',
     'kuma13',
     'fuu32',
-    'bkai113'
   ]
   @contests = problems
   @solved = Hash[solved(copy(@users)).sort_by { |k, v| v.length }.reverse]
@@ -34,11 +32,10 @@ end
 get '/solved/:id' do
   @users = [
     'rika0384',
-    'yoshikawa1118',
     'shumon_84',
     'ixmel_rd',
     'tuki_remon',
-    'noy',
+    'noy72',
     'uchi',
     'yuiop',
     'yebityon',
@@ -50,17 +47,15 @@ get '/solved/:id' do
     'kaito',
     'kuma13',
     'fuu32',
-    'bkai113'
   ]
   @contests = problems
   @solved = solved(@users)
   @users = [
     'rika0384',
-    'yoshikawa1118',
-    'shield_remon',
+    'shumon_84',
     'ixmel_rd',
     'tuki_remon',
-    'noy',
+    'noy72',
     'uchi',
     'yuiop',
     'yebityon',
@@ -72,7 +67,6 @@ get '/solved/:id' do
     'kaito',
     'kuma13',
     'fuu32',
-    'bkai113'
   ]
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
   case params[:id]

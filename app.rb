@@ -64,14 +64,14 @@ get '/solved/:id' do
     'yebityon'
   ]
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
-  case params[:id].to_i
-  when 1 then
+  case params[:id]
+  when "abc" then
     erb :abc
-  when 2 then
+  when "arc" then
     erb :arc
-  when 3 then 
+  when "agc" then 
     erb :agc
-  when 4 then
+  when "other" then
     erb :other
   end
 end

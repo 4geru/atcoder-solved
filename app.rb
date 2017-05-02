@@ -51,18 +51,6 @@ get '/solved/:id' do
   ]
   @contests = problems
   @solved = solved(@users)
-  @users = [
-    'rika0384',
-    'yoshikawa1118',
-    'shield_remon',
-    'ixmel_rd',
-    'tuki_remon',
-    'noy72',
-    'uchi',
-    'Yazaten',
-    'yuiop',
-    'yebityon'
-  ]
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
   case params[:id]
   when "abc" then

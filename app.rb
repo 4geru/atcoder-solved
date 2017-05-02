@@ -7,14 +7,22 @@ get '/' do
   @users = [
     'rika0384',
     'yoshikawa1118',
-    'shield_remon',
+    'shumon_84',
     'ixmel_rd',
     'tuki_remon',
     'noy72',
     'uchi',
-    'Yazaten',
     'yuiop',
-    'yebityon'
+    'yebityon',
+    'vvataarne',
+    'pn33550336',
+    'honey416x2',
+    'Fred373962260',
+    'xrimf2145',
+    'kaito',
+    'kuma13',
+    'fuu32',
+    'bkai113'
   ]
   @contests = problems
   @solved = Hash[solved(copy(@users)).sort_by { |k, v| v.length }.reverse]
@@ -27,14 +35,22 @@ get '/solved/:id' do
   @users = [
     'rika0384',
     'yoshikawa1118',
-    'shield_remon',
+    'shumon_84',
     'ixmel_rd',
     'tuki_remon',
     'noy',
     'uchi',
-    'Yazaten',
     'yuiop',
-    'yebityon'
+    'yebityon',
+    'vvataarne',
+    'pn33550336',
+    'honey416x2',
+    'Fred373962260',
+    'xrimf2145',
+    'kaito',
+    'kuma13',
+    'fuu32',
+    'bkai113'
   ]
   @contests = problems
   @solved = solved(@users)
@@ -46,9 +62,17 @@ get '/solved/:id' do
     'tuki_remon',
     'noy',
     'uchi',
-    'Yazaten',
     'yuiop',
-    'yebityon'
+    'yebityon',
+    'vvataarne',
+    'pn33550336',
+    'honey416x2',
+    'Fred373962260',
+    'xrimf2145',
+    'kaito',
+    'kuma13',
+    'fuu32',
+    'bkai113'
   ]
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
   case params[:id]

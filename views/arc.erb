@@ -47,7 +47,7 @@
           <% @users.each do |user| %>
               <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
                 <td class="table_line ac">
-                  <p class="text-success show_name" title=<%= user %>>*</p>
+                  <p class="text-success show_name" title=<%= user %>></p>
                 </td>
               <% else %>
                 <td class="table_line">

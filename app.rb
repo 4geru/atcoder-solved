@@ -11,7 +11,7 @@ require 'json'
   'tuki_remon',
   'noy72',
   'uchi',
-  'Yazaten',
+  # 'Yazaten',
   'yuiop',
   'yebityon'
 ]
@@ -25,7 +25,7 @@ get '/' do
     'tuki_remon',
     'noy72',
     'uchi',
-    'Yazaten',
+    # 'Yazaten',
     'yuiop',
     'yebityon'
   ]

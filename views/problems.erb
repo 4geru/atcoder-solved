@@ -53,8 +53,8 @@ svg.selectAll("rect")
       width: function(d){return xScale(d[1])},
       height: 20,
       fill: function(d){
-        if(d[1] >= 250)return "red";
-        if(d[1] >= 200)return "yellow";
+        if(d[1] >= 500)return "red";
+        if(d[1] >= 300)return "yellow";
         if(d[1] >= 100)return "blue";
         return "green";
       }

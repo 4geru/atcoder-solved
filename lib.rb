@@ -12,5 +12,5 @@ def lib_solved(users)
       [key, before] 
     } # 日付ごとにカウントする
     {name: user, data: times }
-  }
+  }.sort_by{|user| -user[:data].last[1]}
 end

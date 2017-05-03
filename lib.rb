@@ -13,5 +13,4 @@ def lib_solved(users)
     } # 日付ごとにカウントする
     {name: user, data: times }
   }
-  p users
 end

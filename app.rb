@@ -2,6 +2,8 @@ require 'sinatra'
 require 'net/http'
 require 'uri'
 require 'json'
+require './lib'
+require 'chartkick'
 
 get '/' do
   @users = [
@@ -24,9 +26,18 @@ get '/' do
   ]
   @contests = problems
   @solved = Hash[solved(copy(@users)).sort_by { |k, v| v.length }.reverse]
-  puts @solved
   @users = @solved.keys
   erb :problems
+end
+
+get '/test' do
+  @users = [
+    'shumon_84',
+    'vvataarne',
+  ]
+  @contests = problems
+  @graph_info = lib_solved(copy(@users))
+  erb :test
 end
 
 get '/solved/:id' do

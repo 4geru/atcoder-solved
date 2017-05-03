@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (3.6.8)
+    chartkick (2.2.3)
     multi_json (1.12.1)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -27,8 +28,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  chartkick
   sinatra
   sinatra-reloader
 
 BUNDLED WITH
-   1.12.4
+   1.14.6

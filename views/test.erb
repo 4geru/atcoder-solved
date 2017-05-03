@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="/assets/css/atcoder.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/jquery.mouseinfobox.css" />
+
+
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="chartkick.js"></script>
+</head>
+<body>
+<%= erb :header %>
+  
+<%= line_chart @graph_info,
+height: "500px",
+library: {
+    title: {
+        text: 'AtcoderSolved'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top'
+    },
+    chart: {
+        height: 400,
+        margin: [50, 135, 200, 100],
+        zoomType: 'x',
+        resetZoomButton: {
+            position: {
+                x: 0,
+                y: -30
+            }
+        },
+        type: 'line'
+    }
+} 
+
+%>
+
+</body>
+</html>

@@ -32,8 +32,22 @@ end
 
 get '/test' do
   @users = [
+    'rika0384',
     'shumon_84',
+    'ixmel_rd',
+    'tuki_remon',
+    'noy72',
+    'uchi',
+    'yuiop',
+    'yebityon',
     'vvataarne',
+    'pn33550336',
+    'honey416x2',
+    'Fred373962260',
+    'xrimf2145',
+    'kaito',
+    'kuma13',
+    'fuu32',
   ]
   @contests = problems
   @graph_info = lib_solved(copy(@users))

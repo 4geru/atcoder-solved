@@ -6,20 +6,40 @@
   <link rel="stylesheet" href="/assets/css/atcoder.css">
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/jquery.mouseinfobox.css" />
-  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script type="text/javascript" src="assets/js/jquery.mouseinfobox.js"></script>
 
 
   <script src="//code.highcharts.com/highcharts.js"></script>
-  <script src="//www.google.com/jsapi"></script>
   <script src="chartkick.js"></script>
 </head>
 <body>
 <%= erb :header %>
   
 <%= line_chart @graph_info,
-width: "80%"%>
+height: "500px",
+library: {
+    title: {
+        text: 'AtcoderSolved'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top'
+    },
+    chart: {
+        height: 400,
+        margin: [50, 120, 200, 100],
+        zoomType: 'x',
+        resetZoomButton: {
+            position: {
+                x: 0,
+                y: -30
+            }
+        },
+        type: 'line'
+    }
+} 
+
+%>
 
 </body>
 </html>

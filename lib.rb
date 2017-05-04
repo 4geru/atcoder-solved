@@ -1,3 +1,7 @@
+def copy(users)
+  Marshal.load(Marshal.dump(users))
+end
+
 def get_user
   @users = [
     'rika0384',
@@ -19,7 +23,7 @@ def get_user
   ]
 end
 
-def lib_solved(users)
+def graph(users)
   users.map! {|user| 
     uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?user=' + user)
     results = JSON.parse(Net::HTTP.get(uri))
@@ -33,4 +37,37 @@ def lib_solved(users)
     } # 日付ごとにカウントする
     {name: user, data: times }
   }.sort_by{|user| -user[:data].last[1]}
+end
+
+
+def problems
+  ary = []
+  uri = URI.parse('http://kenkoooo.com/atcoder/json/problems.json')
+  results = JSON.parse(Net::HTTP.get(uri))
+  for result in results do
+    ary.push({
+      contest: result['contest'],
+      id: result['id'],
+      name: result['name']
+    })
+  end
+  ary
+end
+
+def solved(users)
+  ary = {}
+  user_str = ""
+  users = users.map{|user| 
+    user_str += user + ',' 
+    ary[user] = []
+  }
+  # get problems
+  uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?rivals=' + user_str)
+  results = JSON.parse(Net::HTTP.get(uri))
+  results.map{|problem| 
+    problem["rivals"].map{ |rival|
+      ary[rival].push(problem["id"])
+    }
+  }
+  ary
 end

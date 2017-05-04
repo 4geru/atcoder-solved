@@ -15,7 +15,7 @@ end
 get '/graph' do
   @users = get_user
   @contests = problems
-  @graph_info = lib_solved(copy(@users))
+  @graph_info = graph(copy(@users))
   erb :graph
 end
 
@@ -35,42 +35,4 @@ get '/solved/:id' do
   when "other" then
     erb :other
   end
-end
-
-def copy(users)
-  Marshal.load(Marshal.dump(users))
-end
-
-def problems
-  ary = []
-  uri = URI.parse('http://kenkoooo.com/atcoder/json/problems.json')
-  json = Net::HTTP.get(uri)
-  results = JSON.parse(json)
-  for result in results do
-    ary.push({
-      contest: result['contest'],
-      id: result['id'],
-      name: result['name']
-    })
-  end
-  ary
-end
-
-def solved(users)
-  ary = {}
-  user_str = ""
-  users = users.map{|user| 
-    user_str += user + ',' 
-    ary[user] = []
-  }
-  # get problems
-  uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?rivals=' + user_str)
-  json = Net::HTTP.get(uri)
-  results = JSON.parse(json)
-  results.map! {|problem| 
-    problem["rivals"].map! { |rival|
-      ary[rival].push(problem["id"])
-    }
-  }
-  ary
 end

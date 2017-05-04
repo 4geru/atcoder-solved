@@ -6,24 +6,6 @@ require './lib'
 require 'chartkick'
 
 get '/' do
-  @users = [
-    'rika0384',
-    'shumon_84',
-    'ixmel_rd',
-    'tuki_remon',
-    'noy72',
-    'uchi',
-    'yuiop',
-    'yebityon',
-    'vvataarne',
-    'pn33550336',
-    'honey416x2',
-    'Fred373962260',
-    'xrimf2145',
-    'k16180',
-    'kuma13',
-    'fuu32',
-  ]
   @contests = problems
   @solved = Hash[solved(copy(@users)).sort_by { |k, v| v.length }.reverse]
   @users = @solved.keys
@@ -31,48 +13,14 @@ get '/' do
 end
 
 get '/test' do
-  @users = [
-    'rika0384',
-    'shumon_84',
-    'ixmel_rd',
-    'tuki_remon',
-    'noy72',
-    'uchi',
-    'yuiop',
-    'yebityon',
-    'vvataarne',
-    'pn33550336',
-    'honey416x2',
-    'Fred373962260',
-    'xrimf2145',
-    'k16180',
-    'kuma13',
-    'fuu32',
-  ]
+  @users = get_user
   @contests = problems
   @graph_info = lib_solved(copy(@users))
   erb :test
 end
 
 get '/solved/:id' do
-  @users = [
-    'rika0384',
-    'shumon_84',
-    'ixmel_rd',
-    'tuki_remon',
-    'noy72',
-    'uchi',
-    'yuiop',
-    'yebityon',
-    'vvataarne',
-    'pn33550336',
-    'honey416x2',
-    'Fred373962260',
-    'xrimf2145',
-    'k16180',
-    'kuma13',
-    'fuu32',
-  ]
+  @users = get_user
   @contests = problems
   @solved = solved(@users)
   

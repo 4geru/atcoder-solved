@@ -1,3 +1,23 @@
+def get_user
+  @users = [
+    'rika0384',
+    'shumon_84',
+    'ixmel_rd',
+    'tuki_remon',
+    'noy72',
+    'uchi',
+    'yuiop',
+    'yebityon',
+    'vvataarne',
+    'pn33550336',
+    'honey416x2',
+    'Fred373962260',
+    'xrimf2145',
+    'k16180',
+    'kuma13',
+    'fuu32',
+  ]
+end
 
 def lib_solved(users)
   users.map! {|user| 

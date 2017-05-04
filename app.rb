@@ -12,11 +12,11 @@ get '/' do
   erb :problems
 end
 
-get '/test' do
+get '/graph' do
   @users = get_user
   @contests = problems
   @graph_info = lib_solved(copy(@users))
-  erb :test
+  erb :graph
 end
 
 get '/solved/:id' do
@@ -36,6 +36,7 @@ get '/solved/:id' do
     erb :other
   end
 end
+
 def copy(users)
   Marshal.load(Marshal.dump(users))
 end

@@ -20,7 +20,7 @@ get '/' do
     'honey416x2',
     'Fred373962260',
     'xrimf2145',
-    'kaito',
+    'k16180',
     'kuma13',
     'fuu32',
   ]
@@ -45,7 +45,7 @@ get '/test' do
     'honey416x2',
     'Fred373962260',
     'xrimf2145',
-    'kaito',
+    'k16180',
     'kuma13',
     'fuu32',
   ]
@@ -69,7 +69,7 @@ get '/solved/:id' do
     'honey416x2',
     'Fred373962260',
     'xrimf2145',
-    'kaito',
+    'k16180',
     'kuma13',
     'fuu32',
   ]
@@ -89,7 +89,7 @@ get '/solved/:id' do
     'honey416x2',
     'Fred373962260',
     'xrimf2145',
-    'kaito',
+    'k16180',
     'kuma13',
     'fuu32',
   ]
@@ -127,7 +127,7 @@ end
 def solved(users)
   ary = {}
   user_str = ""
-  users.map! {|user| 
+  users = users.map{|user| 
     user_str += user + ',' 
     ary[user] = []
   }

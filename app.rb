@@ -63,7 +63,6 @@ get '/aor' do
     @graph_info = random_aor(get_twitter_users)
     @graph_info.to_s
 
-    tweet
     client.update(@graph_info)
     @graph_info
     aor.cnt.to_s

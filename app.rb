@@ -7,22 +7,21 @@ require 'chartkick'
 
 get '/' do
   @contests = problems
-  @solved = Hash[solved(copy(@users)).sort_by { |k, v| v.length }.reverse]
+  @solved = Hash[solved(copy(get_user)).sort_by { |k, v| v.length }.reverse]
   @users = @solved.keys
   erb :problems
 end
 
 get '/graph' do
   @users = get_user
-  @contests = problems
-  @graph_info = graph(copy(@users))
+  @graph_info = graph(copy(get_user))
   erb :graph
 end
 
 get '/solved/:id' do
   @users = get_user
   @contests = problems
-  @solved = solved(@users)
+  @solved = solved(get_user)
   
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
   case params[:id]
@@ -35,4 +34,9 @@ get '/solved/:id' do
   when "other" then
     erb :other
   end
+end
+
+get '/aor' do
+  @graph_info = random_aor(get_twitter_users)
+  @graph_info.to_s
 end

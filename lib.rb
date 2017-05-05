@@ -23,6 +23,27 @@ def get_user
   ]
 end
 
+def get_twitter_users
+  @users = {
+    'rika0384' => '@wk1080id',
+    'shumon_84' => '@shumon_84',
+    'ixmel_rd' => '@mel_fall524',
+    'tuki_remon' => '@tukiremon',
+    'noy72' => '@noynote',
+    'uchi' => '@_4geru',
+    'yuiop' => '@IS0283IR',
+    'yebityon' => '@sigsigma19',
+    'vvataarne' => '@vvataarne',
+    'pn33550336'=> nil,
+    'honey416x2' => nil,
+    'Fred373962260' => nil,
+    'xrimf2145' => nil,
+    'k16180' => '@newton112358',
+    'kuma13' => nil,
+    'fuu32' => nil
+  }
+end
+
 def graph(users)
   users.map! {|user| 
     uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?user=' + user)
@@ -38,7 +59,6 @@ def graph(users)
     {name: user, data: times }
   }.sort_by{|user| -user[:data].last[1]}
 end
-
 
 def problems
   ary = []
@@ -57,7 +77,8 @@ end
 def solved(users)
   ary = {}
   user_str = ""
-  users = users.map{|user| 
+  print users
+  users = users.map!{|user| 
     user_str += user + ',' 
     ary[user] = []
   }
@@ -70,4 +91,36 @@ def solved(users)
     }
   }
   ary
+end
+
+def is_aor(date)
+  prev_month = Date.today << 1
+  prev_few_days = Date.today - 3
+  prev_few_days > date and date > prev_month
+end
+
+def aor(users)
+  selected_user = users.select{ |username, twitterid| twitterid } # twitter id がある人だけ
+  .map{ | username, twitterid |  username } # usernameだけを抽出
+  .map{|user| 
+    uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?user=' + user)
+    results = JSON.parse(Net::HTTP.get(uri))
+    last_ac = results.select{ | result | result["status"] == "AC" } # ACだけを選択
+    .max {|a, b| a['ac_time'] <=> b['ac_time'] } # 最後に解いた問題をとる
+    [user, Date.parse(last_ac['ac_time'])]
+  }.select{|user| is_aor(user[1])}
+  .map{|user| [user[0], (Date.today - user[1]).to_i]}
+end
+
+def aor_end_sentence(day)
+  [
+    "#{day}日解いてないですよ〜♪",
+    "Atcoder#{day}日解いてないですよ〜♪",
+    "進捗ないのですか？〜♪",
+  ].sample
+end
+
+def random_aor(users)
+  user = aor(users).sample
+  "#{users[user[0]]} #{user[0]}さん " + aor_end_sentence(user[1])
 end

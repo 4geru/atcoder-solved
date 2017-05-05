@@ -44,7 +44,7 @@ end
 
 get '/aor' do
   aor = Aorlog.first # 最初のデータを取る
-  aor = Aorlog.new({cnt:0}) if aor == nil # ない場合には新しく作る
+  aor = Aorlog.new({cnt:1}) if aor == nil # ない場合には新しく作る
   aor.cnt *= -1
   update_at = Time.parse('2017-05-05 00:00:00 +09:00')
   # update_at = aor[:updated_at]
@@ -67,7 +67,7 @@ get '/aor' do
     # tweet
     # client.update(@graph_info)
     # @graph_info
-    'ok'
+    aor.cnt.to_s
   else
     # 煽らない
     'not'

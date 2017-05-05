@@ -54,21 +54,22 @@ get '/aor' do
   if (time - update_at)/60/60 > 6
     # 煽る
 
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV["AOR_CONSUMER_KEY"]
-      config.consumer_secret     = ENV["AOR_CONSUMER_SECRET"]
-      config.access_token        = ENV["AOR_ACCESS_TOKEN"]
-      config.access_token_secret = ENV["AOR_ACCESS_TOKEN_RECRET"]
-    end
+    # client = Twitter::REST::Client.new do |config|
+    #   config.consumer_key        = ENV["AOR_CONSUMER_KEY"]
+    #   config.consumer_secret     = ENV["AOR_CONSUMER_SECRET"]
+    #   config.access_token        = ENV["AOR_ACCESS_TOKEN"]
+    #   config.access_token_secret = ENV["AOR_ACCESS_TOKEN_RECRET"]
+    # end
 
-    @graph_info = random_aor(get_twitter_users)
-    @graph_info.to_s
+    # @graph_info = random_aor(get_twitter_users)
+    # @graph_info.to_s
 
     # tweet
-    client.update(@graph_info)
-    @graph_info
+    # client.update(@graph_info)
+    # @graph_info
+    'ok'
   else
     # 煽らない
-    'AOR'
+    'not'
   end
 end

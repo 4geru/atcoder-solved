@@ -7,6 +7,9 @@ gem 'chartkick'
 gem 'rake'
 gem "activerecord", "< 5.0.0"
 gem 'sinatra-activerecord'
+gem 'materialize-sass'
+gem 'twitter'
+gem 'dotenv'
 
 group :development do
   gem 'sqlite3'

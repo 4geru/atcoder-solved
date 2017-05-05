@@ -4,9 +4,10 @@ $(function(){
             type: "get",
             url: "/aor",
             async: false
-        }).done(function(result) {  
-            console.log(request.responseText);
- 
+        }).done(function(result) {
+
+            console.log(result);
+            $('#aor-result').text(result);
         })
     });
 });

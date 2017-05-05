@@ -97,3 +97,6 @@ header a:active { color: #ffffff; }
 .div_aor{
   text-align: center;
 }
+#submit-comment{
+  margin: 15px;
+}

@@ -1,14 +1,15 @@
 require 'bundler/setup'
 Bundler.require
+require 'dotenv'
+Dotenv.load
 require 'sinatra'
 require 'net/http'
 require 'uri'
 require 'json'
 require 'chartkick'
+require 'twitter'
 require './lib.rb'
 require './models/db.rb'
-
-
 
 get '/' do
   @contests = problems
@@ -45,17 +46,29 @@ get '/aor' do
   aor = Aorlog.first # 最初のデータを取る
   aor = Aorlog.new({cnt:0}) if aor == nil # ない場合には新しく作る
   aor.cnt *= -1
-  update_at = Time.parse('2017-05-05 00:00:00 +09:00')#aor[:updated_at]
+  update_at = Time.parse('2017-05-05 00:00:00 +09:00')
+  # update_at = aor[:updated_at]
   aor.save
   time = Time.now
 
-  [((time - update_at)/60/60).to_s, time.to_s]
   if (time - update_at)/60/60 > 6
     # 煽る
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = ENV["AOR_CONSUMER_KEY"]
+      config.consumer_secret     = ENV["AOR_CONSUMER_SECRET"]
+      config.access_token        = ENV["AOR_ACCESS_TOKEN"]
+      config.access_token_secret = ENV["AOR_ACCESS_TOKEN_RECRET"]
+    end
+
     @graph_info = random_aor(get_twitter_users)
     @graph_info.to_s
+
+    # tweet
+    client.update(@graph_info)
+    @graph_info
   else
     # 煽らない
-    'false'
+    'AOR'
   end
 end

@@ -122,5 +122,5 @@ end
 
 def random_aor(users)
   user = aor(users).sample
-  "#{users[user[0]]} #{user[0]}さん " + aor_end_sentence(user[1])
+  "#{users[user[0]]} " + aor_end_sentence(user[1])
 end

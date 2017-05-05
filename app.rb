@@ -1,9 +1,14 @@
+require 'bundler/setup'
+Bundler.require
 require 'sinatra'
 require 'net/http'
 require 'uri'
 require 'json'
-require './lib'
 require 'chartkick'
+require './lib.rb'
+require './models/db.rb'
+
+
 
 get '/' do
   @contests = problems
@@ -37,6 +42,20 @@ get '/solved/:id' do
 end
 
 get '/aor' do
-  @graph_info = random_aor(get_twitter_users)
-  @graph_info.to_s
+  aor = Aorlog.first # 最初のデータを取る
+  aor = Aorlog.new({cnt:0}) if aor == nil # ない場合には新しく作る
+  aor.cnt *= -1
+  update_at = Time.parse('2017-05-05 00:00:00 +09:00')#aor[:updated_at]
+  aor.save
+  time = Time.now
+
+  [((time - update_at)/60/60).to_s, time.to_s]
+  if (time - update_at)/60/60 > 6
+    # 煽る
+    @graph_info = random_aor(get_twitter_users)
+    @graph_info.to_s
+  else
+    # 煽らない
+    'false'
+  end
 end

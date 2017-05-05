@@ -9,17 +9,20 @@
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.mouseinfobox.js"></script>
+  <script src="problems.js"></script>
+
   <script type="text/javascript">
     var problems = <%= @solved.map{|user| [user[0],user[1].length] } %>;
-  
   </script>
 </head>
 <body>
 <%= erb :header %>
 <div class="wrapper">  
-  <div id="result"></div>
-
-
+<div id="result"></div>
+<div class="aor_div">
+<button id="submit-comment" style='margin-bottom: 100px;'>AORる</button>
+</div>
+</div>
 <script>
 
 var w = 1000;

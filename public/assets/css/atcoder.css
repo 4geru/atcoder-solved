@@ -19,7 +19,6 @@ th{
     color: white;
 }
 #result{
-  margin:100px;
   text-align: center;
 }
 .ac {
@@ -61,7 +60,7 @@ th{
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,.2), 0px -1px 5px 1px rgba(255,255,255,1) inset;
   width: 100%;
   padding-top: 20px;
-  background-color: #000000	;
+  background-color: #000000 ;
   color: white ;
 }
 .header.fixed .fixbar {
@@ -94,3 +93,7 @@ header a:visited { color: #ffffff; }
 header a:hover { color: #8f8f8f; }
 header a:active { color: #ffffff; }
 /* -- end -- */
+
+.div_aor{
+  text-align: center;
+}

@@ -123,5 +123,5 @@ end
 def random_aor(users)
   user = aor(users).sample
   "#{users[user[0]]} " + aor_end_sentence(user[1])
-  "進捗出してますか〜"
+  "進捗出して欲しいな〜"
 end

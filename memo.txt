@@ -1,8 +1,0 @@
-
-get '/atcoder' do
-  uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?user=kenkoooo&rivals=Yazaten,ixmel')
-  json = Net::HTTP.get(uri)
-  result = JSON.parse(json)
-  return result.to_json
-  
-end

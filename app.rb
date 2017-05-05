@@ -9,7 +9,7 @@ require 'json'
 require 'chartkick'
 require 'twitter'
 require './lib.rb'
-require './models/db.rb'
+require './models/aorlog.rb'
 
 get '/' do
   @contests = problems

@@ -67,6 +67,6 @@ get '/aor' do
     @graph_info
   else
     # 煽らない
-    '煽る人なんていないよ〜'
+    'そんなに人を煽るの楽しい？'
   end
 end

@@ -77,7 +77,7 @@ end
 def solved(users)
   ary = {}
   user_str = ""
-  print users
+  # print users
   users = users.map!{|user| 
     user_str += user + ',' 
     ary[user] = []

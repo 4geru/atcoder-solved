@@ -20,6 +20,11 @@ def get_user
     'k16180',
     'kuma13',
     'fuu32',
+    'Oike7',
+    'nerukichi24',
+    'UpGrass',
+    'Masumi',
+    'p1ne4pple'
   ]
 end
 
@@ -40,7 +45,12 @@ def get_twitter_users
     'xrimf2145' => nil,
     'k16180' => '@newton112358',
     'kuma13' => nil,
-    'fuu32' => nil
+    'fuu32' => nil,
+    'Oike7' => nil,
+    'nerukichi24' => nil,
+    'UpGrass' => nil,
+    'Masumi' => nil,
+    'p1ne4pple' => nil
   }
 end
 

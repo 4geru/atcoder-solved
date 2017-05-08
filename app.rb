@@ -46,9 +46,9 @@ get '/aor' do
   aor = Aorlog.first # 最初のデータを取る
   aor = Aorlog.new({cnt:1}) if aor == nil # ない場合には新しく作る
   aor.cnt *= -1
-  update_at = Time.parse('2017-05-05 00:00:00 +09:00')
-  # update_at = aor[:updated_at]
-  aor.save({cnt:1})
+  # update_at = Time.parse('2017-05-05 00:00:00 +09:00')
+  update_at = aor[:updated_at]
+  aor.save({cnt:aor.cnt})
   time = Time.now
 
   if (time - update_at)/60/60 > 6
@@ -69,13 +69,4 @@ get '/aor' do
     # 煽らない
     'そんなに人を煽るの楽しい？'
   end
-end
-
-get '/test' do
-  aor = Aorlog.first # 最初のデータを取る
-  aor = Aorlog.new({cnt:1}) if aor == nil # ない場合には新しく作る
-  aor.cnt *= -1
-  aor.save({cnt:aor.cnt})
-  update_at = aor[:updated_at]
-  JSON.generate([update_at, aor.cnt])
 end

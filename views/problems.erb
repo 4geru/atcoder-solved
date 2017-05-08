@@ -26,8 +26,8 @@
 <div class="wrapper">  
 <div id="result"></div>
 <div class="div_aor">
+<div><p id="aor-result">&nbsp;</p></div>
 <a class="waves-effect waves-light btn" id="submit-comment">AORる</a>
-<div><p id="aor-result"></p></div>
 </div>
 </div>
 <script>
@@ -48,7 +48,7 @@ svg.selectAll("rect")
     .append("rect")
     .attr({
       x: nameSpace+solvedSpace,
-      y: function(d,i){return i * 25;},
+      y: function(d,i){return i * 23;},
       width: function(d){return xScale(d[1])},
       height: 20,
       fill: function(d){
@@ -64,7 +64,7 @@ svg.selectAll("text.name")
     .append("text")
     .attr({
       x: 0,
-      y: function(d,i){ return i * 25 + 12;}
+      y: function(d,i){ return i * 25 + 11;}
     }).text(function(d){
       return d[0].substr(0,10);
     })

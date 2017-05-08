@@ -96,9 +96,13 @@ def solved(users)
   uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?rivals=' + user_str)
   results = JSON.parse(Net::HTTP.get(uri))
   results.map{|problem| 
-    problem["rivals"].map{ |rival|
-      ary[rival].push(problem["id"])
-    }
+    begin
+      problem["rivals"].map{ |rival|
+        ary[rival].push(problem["id"])
+      }
+    rescue Exception => e
+      problem["rivals"] = []
+    end
   }
   ary
 end

@@ -66,7 +66,8 @@ get '/aor' do
     client.update(@graph_info)
     @graph_info
   else
+    p time - update_at
     # 煽らない
-    'そんなに人を煽るの楽しい？'
+    "そんなに人を煽るの楽しい？\n#{6 - ((time - update_at)/(60*60)).to_i}時間後にもう一回するのだ〜！"
   end
 end

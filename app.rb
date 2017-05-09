@@ -48,10 +48,12 @@ get '/aor' do
   aor.cnt *= -1
   # update_at = Time.parse('2017-05-05 00:00:00 +09:00')
   update_at = aor[:updated_at]
-  aor.save({cnt:aor.cnt})
   time = Time.now
 
   if (time - update_at)/60/60 > 6
+    # DBの保存
+    aor.save({cnt:aor.cnt})
+
     # 煽る
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV["AOR_CONSUMER_KEY"]

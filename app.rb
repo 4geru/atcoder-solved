@@ -50,7 +50,7 @@ get '/aor' do
   update_at = aor[:updated_at]
   time = Time.now
 
-  if (time - update_at)/60/60 > 6
+  if (time - update_at)/60/60 > 2
     # DBの保存
     aor.save({cnt:aor.cnt})
 

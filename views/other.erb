@@ -2,64 +2,59 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
-  <link rel="stylesheet" href="/assets/css/atcoder.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/jquery.mouseinfobox.css" />
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script type="text/javascript" src="assets/js/jquery.mouseinfobox.js"></script>
+  <title>Other contest | RiPPro</title>
+  <% @path = '../' %>
+  <%= erb :import %>
 </head>
 <body>
 <%= erb :header %>
   
 <div class="wrapper">  
-  <div id="result"></div>
-<div >
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th rowspan="2">rank</th>
-        <th rowspan="2">name</th>
-        <% @users.each do |user| %>
-          <th id=<%= user %>><%= user %>
-          </th>
-        <% end%> 
-      </tr>
-    </thead>
-    <tbody>
-      <% past = "" %>
-      <% @contests.sort_by{|a| a[:contest] }.each do |contest| %>
-        <% if contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/)  %>
-          <% next %>
-        <% end %>
-        <% if past != contest[:contest] %>
+  
+  <div class='center'>
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th rowspan="2">rank</th>
+          <th rowspan="2">name</th>
+          <% @users.each do |user| %>
+            <th id=<%= user %>><%= user[0..4] %>
+            </th>
+          <% end%> 
+        </tr>
+      </thead>
+      <tbody>
+        <% past = "" %>
+        <% @contests.sort_by{|a| a[:contest] }.each do |contest| %>
+          <% if contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/) %>
+            <% next %>
+          <% end %>
+          <% if past != contest[:contest] %>
+            <tr>
+              <td colspan="<%= @users.length + 3%>"  class="center grey darken-4">
+                <%= contest[:contest] %>          
+              </td>
+            </tr>
+          <% end %>
+          <% past = contest[:contest] %>
           <tr>
-            <td colspan="<%= @users.length + 3%>"  class="contest_title">
-              <%= contest[:contest] %>          
-            </td>
+            <td class=""><%= contest[:name][0] %></td>
+            <td class=""><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
+            <% @users.each do |user| %>
+            <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
+                  <td class="light-green lighten-">
+                    <p class="" title=<%= user %>></p>
+                  </td>
+                <% else %>
+                  <td class="">
+                  </td>
+              <% end %>
+            <% end %>
           </tr>
         <% end %>
-        <% past = contest[:contest] %>
-        <tr>
-          <td class="rank table_line"><%= contest[:name][0] %></td>
-          <td class="title table_line"><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
-          <% @users.each do |user| %>
-
-              <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
-                <td class="table_line ac">
-                  <p class="text-success show_name" title=<%= user %>></p>
-                </td>
-              <% else %>
-                <td class="table_line">
-                </td>
-            <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
+      </tbody>
+    </table>
+  </div>
 </div>
 </body>
 </html>

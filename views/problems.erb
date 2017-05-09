@@ -12,6 +12,9 @@
   <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="chartkick.js"></script>
+
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.mouseinfobox.js"></script>
@@ -23,81 +26,19 @@
 </head>
 <body>
 <%= erb :header %>
-<div class="wrapper">  
-<div id="result"></div>
+
 <div class="div_aor">
-<div><p id="aor-result">&nbsp;</p></div>
 <a class="waves-effect waves-light btn" id="submit-comment">AORる</a>
+<div><p id="aor-result">&nbsp;</p></div>
 </div>
-</div>
-<script>
-
-var w = 1000;
-var h = problems.length * 25;
-var nameSpace = 78;
-var solvedSpace = 27;
-var xScale = d3.scale.linear()
-                .domain([0,w-nameSpace-solvedSpace])
-                .range([0,w])
-
-var svg = d3.select("#result").append("svg").attr({width:w, height:h});
-
-svg.selectAll("rect")
-    .data(problems)
-    .enter()
-    .append("rect")
-    .attr({
-      x: nameSpace+solvedSpace,
-      y: function(d,i){return i * 23;},
-      width: function(d){return xScale(d[1])},
-      height: 20,
-      fill: function(d){
-        if(d[1] >= 500)return "red";
-        if(d[1] >= 300)return "yellow";
-        if(d[1] >= 100)return "blue";
-        return "green";
-      }
-    })
-svg.selectAll("text.name")
-    .data(problems)
-    .enter()
-    .append("text")
-    .attr({
-      x: 0,
-      y: function(d,i){ return i * 25 + 11;}
-    }).text(function(d){
-      return d[0].substr(0,10);
-    })
-      
-
-svg.selectAll("text.hoge")
-    .data(problems)
-    .enter()
-    .append("text")
-    .attr({
-      x: nameSpace,
-      y: function(d,i){ return i * 25 + 12;}
-    }).text(function(d){
-     return d[1];
-    })
-      $(function() {
-  $(window).on('scroll', function() {
-    if ($(this).scrollTop() > 50) {
-      $('.header').addClass('fixed');
-    } else {
-      $('.header').removeClass('fixed');
+<%= bar_chart @solved.map{|user| [user[0],user[1].length] },
+  library: {
+    chart: {
+        height: "#{@solved.length * 28 + 10}px",
+        margin: [0, 135, 200, 100],
     }
-  });
-});
-      
-$('.show_name').infoBox({ // 吹き出し
-  animation: ['opacity', 'bottom'],
-  useMouse: false,
-  offsetX: 30,
-  offsetY: 0
-});
-  </script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="assets/js/materialize.min.js"></script>
+  }
+
+ %>
 </body>
 </html>

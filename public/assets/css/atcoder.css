@@ -98,5 +98,9 @@ header a:active { color: #ffffff; }
   text-align: center;
 }
 #submit-comment{
-  margin: 15px;
+  margin-top: 80px;
+}
+
+p {
+  margin: 10px 10px 10px !important;
 }

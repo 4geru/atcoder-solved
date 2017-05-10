@@ -5,6 +5,11 @@
   <title>AGC contest | RiPPro solved</title>
   <% @path = '../' %>
   <%= erb :import %>
+  <style>
+    td{
+      border: solid 1px #212121;
+    }
+  </style>
 </head>
 <body>
 <%= erb :header %>
@@ -12,15 +17,15 @@
 <div class="wrapper">  
   
   <div class='center'>
-    <table class="striped centered">
+    <table class="striped centered contest">
       <thead>
         <tr>
-          <th rowspan="2">rank</th>
-          <th rowspan="2">name</th>
+          <th rowspan="2" class="light-green lighten-5">rank</th>
+          <th rowspan="2" class="light-green lighten-5">name</th>
           <% @users.each do |user| %>
-            <th id=<%= user %>><%= user[0..4] %>
+            <th id=<%= user %> class="light-green lighten-5"><%= user[0..4] %>
             </th>
-          <% end%> 
+          <% end%>  
         </tr>
       </thead>
       <tbody>
@@ -56,5 +61,6 @@
     </table>
   </div>
 </div>
+<%= erb :end %>
 </body>
 </html>

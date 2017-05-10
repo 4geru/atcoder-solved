@@ -5,19 +5,24 @@
   <title>ABC contest | RiPPro solved</title>
   <% @path = '../' %>
   <%= erb :import %>
+  <style>
+    td{
+      border: solid 1px #212121;
+    }
+  </style>
 </head>
 <body>
 <%= erb :header %>
 <div class="wrapper">  
   
   <div class='center'>
-    <table class="striped centered">
+    <table class="striped centered contest">
       <thead>
         <tr>
-          <th rowspan="2">rank</th>
-          <th rowspan="2">name</th>
+          <th rowspan="2" class="light-green lighten-5">rank</th>
+          <th rowspan="2" class="light-green lighten-5">name</th>
           <% @users.each do |user| %>
-            <th id=<%= user %>><%= user[0..4] %>
+            <th id=<%= user %> class="light-green lighten-5"><%= user[0..4] %>
             </th>
           <% end%> 
         </tr>
@@ -37,15 +42,15 @@
           <% end %>
           <% past = contest[:contest] %>
           <tr>
-            <td class=""><%= contest[:name][0] %></td>
-            <td class=""><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
+            <td class="bordered"><%= contest[:name][0] %></td>
+            <td class="bordered"><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
             <% @users.each do |user| %>
             <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
-                  <td class="light-green lighten-">
+                  <td class="bordered light-green lighten-">
                     <p class="" title=<%= user %>></p>
                   </td>
                 <% else %>
-                  <td class="">
+                  <td class="bordered">
                   </td>
               <% end %>
             <% end %>
@@ -55,5 +60,6 @@
     </table>
   </div>
 </div>
+<%= erb :end %>
 </body>
 </html>

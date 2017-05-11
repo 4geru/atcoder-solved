@@ -23,7 +23,7 @@
           <th rowspan="2" class="light-green lighten-5">rank</th>
           <th rowspan="2" class="light-green lighten-5">name</th>
           <% @users.each do |user| %>
-            <th id=<%= user %> class="light-green lighten-5"><%= user[0..4] %>
+            <th id=<%= user %> class="light-green lighten-5"><%= user[0...3] %>
             </th>
           <% end%> 
         </tr>

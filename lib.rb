@@ -24,7 +24,8 @@ def get_user
     'nerukichi24',
     'UpGrass',
     'Masumi',
-    'p1ne4pple'
+    'p1ne4pple',
+    'ampanchi'
   ]
 end
 
@@ -50,7 +51,8 @@ def get_twitter_users
     'nerukichi24' => nil,
     'UpGrass' => nil,
     'Masumi' => nil,
-    'p1ne4pple' => nil
+    'p1ne4pple' => nil,
+    'ampanchi' => nil
   }
 end
 

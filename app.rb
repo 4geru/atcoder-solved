@@ -29,6 +29,7 @@ get '/solved/:id' do
   @solved = solved(get_user)
   get_user.map{|user| print(user.to_s + ' ' + @solved[user].length.to_s + "\n") }
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
+  @title = params[:id]
   case params[:id]
   when "abc" then
     @contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}

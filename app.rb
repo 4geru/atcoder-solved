@@ -29,7 +29,6 @@ get '/solved/:id' do
   @solved = solved(get_user)
   get_user.map{|user| print(user.to_s + ' ' + @solved[user].length.to_s + "\n") }
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
-  @title = params[:id].upcase
   case params[:id]
   when "abc" then
     @contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}
@@ -41,6 +40,28 @@ get '/solved/:id' do
     @contests = problems.select{|contest| not(contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/))}
   end
   erb :contest
+end
+
+get '/api/solved/:id' do
+  users = get_user
+  solved = solved(get_user)
+  users = users.sort_by{|user| -solved[user].length }.map{ | user| user }
+  title = params[:id].upcase
+  case params[:id]
+  when "abc" then
+    contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}
+  when "arc" then
+    contests = problems.select{|contest| contest[:contest].to_s.match(/arc/)}
+  when "agc" then 
+    contests = problems.select{|contest| contest[:contest].to_s.match(/agc/)}
+  when "other" then
+    contests = problems.select{|contest| not(contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/))}
+  end
+  {
+    title: title,
+    users: users,
+    contests: contests
+  }.to_json
 end
 
 get '/aor' do

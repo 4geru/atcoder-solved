@@ -34,13 +34,10 @@ get '/solved/:id' do
     @contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}
   when "arc" then
     @contests = problems.select{|contest| contest[:contest].to_s.match(/arc/)}
-    erb :arc
   when "agc" then 
     @contests = problems.select{|contest| contest[:contest].to_s.match(/agc/)}
-    erb :agc
   when "other" then
     @contests = problems.select{|contest| not(contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/))}
-    erb :other
   end
   erb :contest
 end

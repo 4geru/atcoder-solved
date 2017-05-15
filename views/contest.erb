@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Other contest | RiPPro</title>
+  <title>ABC contest | RiPPro solved</title>
   <% @path = '../' %>
   <%= erb :import %>
   <style>
@@ -13,7 +13,6 @@
 </head>
 <body>
 <%= erb :header %>
-  
 <div class="wrapper">  
   
   <div class='center'>
@@ -31,9 +30,6 @@
       <tbody>
         <% past = "" %>
         <% @contests.sort_by{|a| a[:contest] }.each do |contest| %>
-          <% if contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/) %>
-            <% next %>
-          <% end %>
           <% if past != contest[:contest] %>
             <tr>
               <td colspan="<%= @users.length + 3%>"  class="center grey darken-4">
@@ -43,15 +39,15 @@
           <% end %>
           <% past = contest[:contest] %>
           <tr>
-            <td class=""><%= contest[:name][0] %></td>
-            <td class=""><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
+            <td class="bordered"><%= contest[:name][0] %></td>
+            <td class="bordered"><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
             <% @users.each do |user| %>
             <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
-                  <td class="light-green lighten-">
+                  <td class="bordered light-green lighten-">
                     <p class="" title=<%= user %>></p>
                   </td>
                 <% else %>
-                  <td class="">
+                  <td class="bordered">
                   </td>
               <% end %>
             <% end %>

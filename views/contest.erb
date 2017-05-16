@@ -10,6 +10,7 @@
   <style>
     td{
       border: solid 1px #212121;
+      width: 1000px;
     }
   </style>
   <!-- for graph -->
@@ -20,13 +21,16 @@
     request
     .get('http://localhost:4567/api/solved/<%= @contest %>')
     .end(function(err, res){
-      result = JSON.parse(res.text).solved
-      console.log(result)
-      for(var user in result){
-        var problems = result[user]
-        for(var problem_id in problems){
-          var problem = problems[problem_id]
-          document.getElementsByClassName(`${user} ${problem}`)[0].style.backgroundColor="#8bc34a";
+      var result = JSON.parse(res.text).solved
+      var users   = JSON.parse(res.text).user
+      for(var i = 0 ; i < users.length ; i ++){
+        var user = users[i]
+        document.getElementsByTagName('th')[i+2].innerHTML = user.substr(0,4)
+        for(var j in result[user]){
+          var problem = result[user][j]
+          if(document.getElementsByClassName(problem)[i] != undefined){
+            document.getElementsByClassName(problem)[i].style.backgroundColor = "#8bc34a"            
+          }
         }
       }
       console.log(result)
@@ -35,6 +39,7 @@
   </script>
 </head>
 <body>
+<%= erb :header %>
 <div class="wrapper">  
   <div class='center'>
     <table class="striped centered contest">
@@ -42,9 +47,8 @@
         <tr>
           <th rowspan="2" class="light-green lighten-5">rank</th>
           <th rowspan="2" class="light-green lighten-5">name</th>
-          <% @users.each do |user| %>
-            <th id=<%= user %> class="light-green lighten-5"><%= user[0..4] %>
-            </th>
+          <% @users.times do |user| %>
+            <th id=<%= user %> class="light-green lighten-5">xxxx</th>
           <% end%> 
         </tr>
       </thead>
@@ -53,7 +57,7 @@
         <% @contests.sort_by{|a| a[:contest] }.each do |contest| %>
           <% if past != contest[:contest] %>
             <tr>
-              <td colspan="<%= @users.length + 3%>"  class="center grey darken-4">
+              <td colspan="<%= @users + 3%>"  class="center grey darken-4">
                 <%= contest[:contest] %>          
               </td>
             </tr>
@@ -62,9 +66,8 @@
           <tr>
             <td class="bordered"><%= contest[:name][0] %></td>
             <td class="bordered"><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
-            <% @users.each do |user| %>
-              <td class="bordered <%= user %> <%= contest[:id] %>">
-              </td>
+            <% @users.times do |user| %>
+              <td class="bordered <%= contest[:id] %>"></td>
             <% end %>
           </tr>
         <% end %>

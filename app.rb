@@ -18,6 +18,14 @@ get '/' do
   erb :problems
 end
 
+get '/test' do
+  @users = get_user
+  @contest = 'abc'
+  p @users
+  @contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}
+  erb :test
+end
+
 get '/graph' do
   @users = get_user
   @graph_info = graph(copy(get_user))
@@ -27,6 +35,7 @@ end
 get '/solved/:id' do
   @users = get_user
   @solved = solved(get_user)
+  @title = params[:id].upcase
   get_user.map{|user| print(user.to_s + ' ' + @solved[user].length.to_s + "\n") }
   @users = @users.sort_by{|user| -@solved[user].length }.map{ | user| user }
   case params[:id]
@@ -43,24 +52,19 @@ get '/solved/:id' do
 end
 
 get '/api/solved/:id' do
-  users = get_user
   solved = solved(get_user)
-  users = users.sort_by{|user| -solved[user].length }.map{ | user| user }
-  title = params[:id].upcase
   case params[:id]
   when "abc" then
-    contests = problems.select{|contest| contest[:contest].to_s.match(/abc/)}
+    solved   = solved.map{|user_name, solve| [user_name, solve.select{|contest| contest.to_s.match(/abc/)} ] }.to_h
   when "arc" then
-    contests = problems.select{|contest| contest[:contest].to_s.match(/arc/)}
+    solved   = solved.map{|user_name, solve| [user_name, solve.select{|contest| contest.to_s.match(/arc/)} ] }.to_h
   when "agc" then 
-    contests = problems.select{|contest| contest[:contest].to_s.match(/agc/)}
+    solved   = solved.map{|user_name, solve| [user_name, solve.select{|contest| contest.to_s.match(/agc/)} ] }.to_h
   when "other" then
-    contests = problems.select{|contest| not(contest[:contest].to_s.match(/abc/) or contest[:contest].to_s.match(/arc/) or contest[:contest].to_s.match(/agc/))}
+    solved   = solved.map{|user_name, solve| [user_name, solve.select{|contest| not(contest.to_s.match(/abc/) or contest.to_s.match(/arc/) or contest.to_s.match(/agc/))} ] }.to_h
   end
   {
-    title: title,
-    users: users,
-    contests: contests
+    solved: solved
   }.to_json
 end
 

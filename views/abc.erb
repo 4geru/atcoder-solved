@@ -2,9 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title><%= @contest.upcase %> | RiPPro solved</title>
-  <link rel="stylesheet" href="/assets/css/atcoder.css">
-
+  <title><%= @title %> contest | RiPPro solved</title>
   <% @path = '../' %>
   <%= erb :import %>
   <style>
@@ -12,30 +10,11 @@
       border: solid 1px #212121;
     }
   </style>
-  <!-- for graph -->
-  <script src="/superagent.js"></script>
-  <script>
-
-    var request = window.superagent;
-    request
-    .get('http://localhost:4567/api/solved/<%= @contest %>')
-    .end(function(err, res){
-      result = JSON.parse(res.text).solved
-      console.log(result)
-      for(var user in result){
-        var problems = result[user]
-        for(var problem_id in problems){
-          var problem = problems[problem_id]
-          document.getElementsByClassName(`${user} ${problem}`)[0].style.backgroundColor="#8bc34a";
-        }
-      }
-      console.log(result)
-    });
-
-  </script>
 </head>
 <body>
+<%= erb :header %>
 <div class="wrapper">  
+  
   <div class='center'>
     <table class="striped centered contest">
       <thead>
@@ -63,8 +42,14 @@
             <td class="bordered"><%= contest[:name][0] %></td>
             <td class="bordered"><a href="http://<%= contest[:contest] %>.contest.atcoder.jp/tasks/<%= contest[:id] %>"><%= contest[:name].split('.')[1] %></a></td>
             <% @users.each do |user| %>
-              <td class="bordered <%= user %> <%= contest[:id] %>">
-              </td>
+            <% if not @solved[user].find{|item| item == contest[:id]}.nil? %>
+                  <td class="bordered light-green lighten-">
+                    <p class="" title=<%= user %>></p>
+                  </td>
+                <% else %>
+                  <td class="bordered">
+                  </td>
+              <% end %>
             <% end %>
           </tr>
         <% end %>
@@ -72,5 +57,6 @@
     </table>
   </div>
 </div>
+<%= erb :end %>
 </body>
 </html>

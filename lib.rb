@@ -56,20 +56,48 @@ def get_twitter_users
   }
 end
 
-def graph(users)
+def graph(users, colors)
   users.map! {|user| 
     uri = URI.parse('http://kenkoooo.com/atcoder-api/problems?user=' + user)
     results = JSON.parse(Net::HTTP.get(uri))
-    before = 0
-    times = results.select{ | result | result["status"] == "AC" } # ACだけを選択
-    .map{ |result| result["ac_time"].slice(0..9) } # 時間だけを抽出
-    .group_by{| time | time } # 時間でグルーピングする
-    .sort.map{ |key, value| 
-      before += value.size()
-      [key, before] 
-    } # 日付ごとにカウントする
-    {name: user, data: times }
+    times = get_graph_times(results)
+    problems = get_graph_last(results)
+    last_5_problems = problems[0...5].map{|problem|
+      now = DateTime.now
+      solve = DateTime.parse(problem['ac_time'])
+      if (now - solve).to_f < 1 / 24 / 60 # brefore 1h 
+        problem[:time] = colors[0] || 'red'
+      elsif (now - solve).to_f < 1 # before 1day
+        problem[:time] = colors[1] || 'yellow'
+      elsif (now - solve).to_f < 7 # before 1week
+        problem[:time] = colors[2] || 'blue'
+      elsif (now - solve).to_f < 30 # before 1month
+        problem[:time] = colors[3] || 'green'
+      else
+        problem[:time] = colors[4] || 'grey'
+      end
+      problem
+    }
+    first_problem = problems[-1]
+     # 日付ごとにカウントする
+    {name: user, data: times, last_problems: last_5_problems, first_problem: first_problem }
   }.sort_by{|user| -user[:data].last[1]}
+end
+
+def get_graph_last(results)
+  results.select{ | result | result["status"] == "AC" } # ACだけを選択
+  .sort_by{|result| DateTime.parse(result['ac_time']) }.reverse # 日付でソートし
+end
+
+def get_graph_times(results)
+  before = 0
+  results.select{ | result | result["status"] == "AC" } # ACだけを選択
+  .map{ |result| result["ac_time"].slice(0..9) } # 時間だけを抽出
+  .group_by{| time | time } # 時間でグルーピングする
+  .sort.map{ |key, value| 
+    before += value.size()
+    [key, before] 
+  }
 end
 
 def problems

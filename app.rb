@@ -18,9 +18,28 @@ get '/' do
   erb :problems
 end
 
-get '/graph' do
+get '/test' do
   @users = get_user
   @graph_info = graph(copy(get_user))
+  @graph_info.to_json
+end
+
+get '/graph' do
+  option = ' lighten-1'
+  api_info = graph(copy(get_user), ['red', 'yellow', 'light-blue', 'teal', 'grey'].map{|color| color + option})
+
+  @graph_info = api_info.map{|user| 
+    {name: user[:name], data: user[:data]}
+  }
+  @info = api_info.map{|user| 
+    {
+      name: user[:name], 
+      last_problems: user[:last_problems], 
+      first_problem: user[:first_problem],
+      solved_sum: user[:data].last[1]
+    }
+  }
+  p @info
   erb :graph
 end
 

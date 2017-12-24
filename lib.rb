@@ -1,3 +1,8 @@
+
+require 'net/http'
+require 'uri'
+require 'json'
+
 def get_users
   [
     'rika0384',
@@ -43,29 +48,61 @@ def checkContest(type, contest_name)
   return true
 end
 
-def getContests(type = '')
-  # root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
-  # puts root + get_users.join(',')
+def getResults(type = '')
+  root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
+  puts root + get_users.join(',')
 
-  # uri = URI.parse(root + get_users.join(','))
+  uri = URI.parse(root + get_users.join(','))
   # puts Net::HTTP.get(uri)
-  # results = JSON.parse(Net::HTTP.get(uri))
-  results = JSON.parse(get_file())
-  contests = {}
+  results = JSON.parse(Net::HTTP.get(uri))
+  # problems = getProblems(type)
+  # results = JSON.parse(get_file())
   results.map{|problem|  
     next if problem['result'] != 'AC'
     next if checkContest(type, problem['contest_id']) # 判定
-  
-    begin
-      contests[problem['contest_id']] = {} if contests[problem['contest_id']].nil?
-      contests[problem['contest_id']][problem['problem_id']] = [] if contests[problem['contest_id']][problem['problem_id']].nil?
-      # todo 日付sortが必要
-      next if contests[problem['contest_id']][problem['problem_id']].find{|info| info[:user] == problem['user_id']}
-      
-      contests[problem['contest_id']][problem['problem_id']] << {user: problem['user_id'], time: Time.at(problem['epoch_second']) }
-    rescue Exception => e
-      problem["rivals"] = []
-    end
+    next if problems[problem['contest_id']]['problem'][problem['problem_id']].nil? # 判定
+    problems[problem['contest_id']]['problem'][problem['problem_id']][:accept] << problem['user_id']
   }
-  return contests
+  return problems
 end
+
+def getContests(type = '')
+  root = 'http://kenkoooo.com/atcoder/atcoder-api/info/contests'
+
+  uri = URI.parse(root)
+  results = JSON.parse(Net::HTTP.get(uri))
+  keys = ["start_epoch_second", "id", "title"]
+  contests = results.map{|result|
+    next if checkContest(type, result['id']) # 判定
+    contest = {}
+    [result['id'], keys.map{|key| [key, result[key] ]}.to_h]
+  }.reject{|c| c.nil? }.sort_by{|k,v| k}.to_h
+
+end
+
+def getProblems(type='')
+  root = 'http://kenkoooo.com/atcoder/atcoder-api/info/problems'
+
+  uri = URI.parse(root)
+  results = JSON.parse(Net::HTTP.get(uri))
+  contests = getContests(type).map{|k,contest | 
+    contest['problem'] = [] 
+    [k,contest]
+  }.to_h
+  results.map{|result|
+    next if checkContest(type, result['id']) # 判定
+    contests[result['contest_id']]['problem'] << [result['id'], {'id': result['id'], 'title': result['title'], 'contest_id': result['contest_id'], 'accept': []}]
+  }.reject{|c| c.nil?}#.sort_by{|k,v| k }.to_h
+  contests.map{|k,v|
+    v['problem'] = v['problem'].sort_by{|k,v| k}.to_h
+    [k,v]
+  }.to_h
+end
+# getProblems('other').map{|k,v|
+#   puts v['problem']
+# }
+getResults('other').map{|k, contest|
+  contest['problem'].map{|kk, problem|
+    puts problem
+  }
+}

@@ -1,0 +1,106 @@
+
+.rank{
+    width: 50px;
+    text-align: center;
+}
+.contest{
+    width: 50px;
+}
+th{
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+    width: 100px;
+}
+.contest_title{
+    background-color: black;
+    color: white;
+}
+#result{
+  text-align: center;
+}
+.ac {
+  background-color: #A9BCF5;
+}
+/* -- for tab selection -- */
+.tab_link {
+  border-radius: 6px 6px 0 0;
+  display: inline-block;
+  line-height: 32px;
+  font: sans-serif;
+  text-align: center;
+  background-color: #efefef;
+  color: black;
+  margin-left: 4px;
+  text-decoration: none;
+  padding: 0 32px;
+}
+
+.content {
+  border: 1px solid lightgray;
+  height: 320px;
+  display: none;
+  padding: 32px;
+}
+
+.content:target {
+  display: block;
+}
+/* -- end -- */
+
+/* -- for stop bar -- */
+.header {
+  height: 100px;
+}
+.header .fixbar {
+  position: absolute;
+  background-image: url('images/bg01.png');
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,.2), 0px -1px 5px 1px rgba(255,255,255,1) inset;
+  width: 100%;
+  padding-top: 20px;
+  background-color: #000000 ;
+  color: white ;
+}
+.header.fixed .fixbar {
+  position: fixed;
+  margin-top: -10px;
+}
+#top{
+  margin: 10px ;
+}
+svg{
+  margin-top: 75px ;
+}
+/* -- end -- */
+
+/* -- for table line -- */
+.table_line {
+   border-style: solid dotted;/* 線種 */
+   border-width: 2px; /* 線の太さ */
+   border-color: black; /* 線色 */
+}
+/* -- end -- */
+
+/* -- for table fukidashi -- */
+/* -- end -- */
+
+/* -- link color -- */
+header a { color: #8f8f8f; }
+header a:link { color: #ffffff; }
+header a:visited { color: #ffffff; }
+header a:hover { color: #8f8f8f; }
+header a:active { color: #ffffff; }
+/* -- end -- */
+
+.div_aor{
+  text-align: center;
+}
+#submit-comment{
+  margin-top: 80px;
+}
+
+p {
+  margin: 10px 10px 10px !important;
+}

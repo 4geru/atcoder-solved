@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Top | RiPPro solved</title>
+  <link rel="stylesheet" href="/assets/css/atcoder.css">
+
+  <% @path = '/' %>
+  <%= erb :import %>
+
+  <!-- for ajax -->
+  <script src="problems.js"></script>
+
+  <!-- for graph -->
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="chartkick.js"></script>
+
+</head>
+<body>
+<%= erb :header %>
+
+  <div class="div_aor">
+  <a class="waves-effect waves-light btn" id="submit-comment">AORる</a>
+  <div><p id="aor-result">&nbsp;</p></div>
+  </div>
+  <%= bar_chart @solved.map{|user| [user[0],user[1].length] },
+    library: {
+      chart: {
+          height: "#{@solved.length * 28 + 10}px",
+          margin: [0, 135, 200, 100],
+      }
+    }
+
+   %>
+</body>
+</html>

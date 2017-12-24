@@ -1,0 +1,39 @@
+<table class="striped centered contest">
+  <thead>
+    <tr>
+      <th rowspan="2" class="light-green lighten-5">rank</th>
+      <th rowspan="2" class="light-green lighten-5">name</th>
+      <% @users.each do |user| %>
+        <th id=<%= user %> class="light-green lighten-5"><%= user[0..4] %>
+        </th>
+      <% end%> 
+    </tr>
+  </thead>
+  <tbody>
+    <% @contests.each do |contest_id, contest| %>
+      <tr>
+        <td colspan='<%= @users.length + 2%>'>
+          <%= contest_id %>          
+        </td>
+      </tr>
+      <% contest['problem'].each do |_kk, problem|%>
+      
+      <tr>
+        <td class="bordered" width="100px">
+          <%= problem[:title][0..1] %>
+        </td>
+        <td class="bordered" width="100px">
+          <%= problem[:title][2..-1] %>
+        </td>
+        <% @users.each do |user| %>
+          <td>
+            <% if problem[:accept].include?(user) %>
+              AC
+            <% end %>
+          </td>
+        <% end%> 
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

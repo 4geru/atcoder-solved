@@ -1,4 +1,3 @@
-
 require 'net/http'
 require 'uri'
 require 'json'
@@ -10,7 +9,6 @@ def get_users
     'ixmel_rd',
     'tuki_remon',
     'noy72',
-    'uchi',
     'yuiop',
     'yebityon',
     'vvataarne',
@@ -50,12 +48,11 @@ end
 
 def getResults(type = '')
   root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
-  puts root + get_users.join(',')
 
   uri = URI.parse(root + get_users.join(','))
   # puts Net::HTTP.get(uri)
   results = JSON.parse(Net::HTTP.get(uri))
-  # problems = getProblems(type)
+  problems = getProblems(type)
   # results = JSON.parse(get_file())
   results.map{|problem|  
     next if problem['result'] != 'AC'
@@ -90,7 +87,7 @@ def getProblems(type='')
     [k,contest]
   }.to_h
   results.map{|result|
-    next if checkContest(type, result['id']) # 判定
+    next if checkContest(type, result['contest_id']) # 判定
     contests[result['contest_id']]['problem'] << [result['id'], {'id': result['id'], 'title': result['title'], 'contest_id': result['contest_id'], 'accept': []}]
   }.reject{|c| c.nil?}#.sort_by{|k,v| k }.to_h
   contests.map{|k,v|
@@ -98,11 +95,28 @@ def getProblems(type='')
     [k,v]
   }.to_h
 end
+
+def getResultCount
+  root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
+  users = get_users
+
+  uri = URI.parse(root + users.join(','))
+  results = JSON.parse(Net::HTTP.get(uri))
+
+  users = users.map{|user| [user, 0] }.to_h
+  results.map{|problem|  
+    next if problem['result'] != 'AC'
+    users[problem['user_id']] += 1
+  }
+  return users.sort_by{|k,v| -v }
+end
+
+# puts getResultCount
 # getProblems('other').map{|k,v|
 #   puts v['problem']
 # }
-getResults('other').map{|k, contest|
-  contest['problem'].map{|kk, problem|
-    puts problem
-  }
-}
+# getResults('abc').map{|k, contest|
+#   contest['problem'].map{|kk, problem|
+#     puts problem
+#   }
+# }

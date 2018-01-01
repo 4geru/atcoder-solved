@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title><%= @title %> contest | RiPPro solved</title>
+  <% @path = '../' %>
+  <%= erb :import %>
+  <style>
+    td{
+      border: solid 1px #212121;
+    }
+  </style>
+</head>
+<body>
+<%= erb :header %>
+<div class="wrapper">  
+  
+  <div class='center'>
+    <%= yield %>
+  </div>
+</div>
+<%= erb :end %>
+</body>
+</html>

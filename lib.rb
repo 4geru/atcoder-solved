@@ -124,6 +124,9 @@ def getGraph
   results = JSON.parse(Net::HTTP.get(uri))
 
   users = users.map{|user| [user, {} ] }.to_h
+
+  results.uniq! {|result| result.values_at('problem_id', 'user_id', 'contest_id') }
+
   results.map{|problem|  
     next if problem['result'] != 'AC'
     user = problem['user_id']
@@ -152,4 +155,4 @@ def getGraph
   }
   return users
 end
-puts getResultCount
+getGraph

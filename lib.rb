@@ -98,17 +98,21 @@ def getProblems(type='')
 end
 
 def getResultCount
-  root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
+  root = 'http://kenkoooo.com/atcoder/atcoder-api/info/ac'
   users = get_users
 
-  uri = URI.parse(root + users.join(','))
+  uri = URI.parse(root)
   results = JSON.parse(Net::HTTP.get(uri))
 
-  users = users.map{|user| [user, 0] }.to_h
-  results.map{|problem|  
-    next if problem['result'] != 'AC'
-    users[problem['user_id']] += 1
-  }
+  # users = users.map{|user| [user, 0] }.to_h
+  users = users.map{|user|  
+    
+    result = results.find{|result| 
+      result['user_id'] == user
+    }
+    [user, result['problem_count']]
+  }.to_h
+
   return users.sort_by{|k,v| -v }
 end
 
@@ -148,20 +152,4 @@ def getGraph
   }
   return users
 end
-# puts getGraph
-# .map{|user, data|
-#   puts user
-#   data.map{|d,c|
-#     puts "#{d} >> #{c}"
-#   }
-# }
-
-# puts getResultCount
-# getProblems('other').map{|k,v|
-#   puts v['problem']
-# }
-# getResults('abc').map{|k, contest|
-#   contest['problem'].map{|kk, problem|
-#     puts problem
-#   }
-# }
+puts getResultCount

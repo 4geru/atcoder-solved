@@ -2,7 +2,7 @@
 <script src="//code.highcharts.com/highcharts.js"></script>
 <script src="chartkick.js"></script>
 
-<%= bar_chart @solved.map{|user, count| [user,count] },
+<%= bar_chart @solved,
   library: {
     chart: {
         height: "#{@solved.length * 35 + 10}px",

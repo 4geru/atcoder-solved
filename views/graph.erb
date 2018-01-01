@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>graph | RiPPro solved</title>
-
-  <!-- for graph -->
-  <script src="//code.highcharts.com/highcharts.js"></script>
-  <script src="chartkick.js"></script>
-
-  <% @path = '/' %>
-  <%= erb :import %>
-  <style>
-  a{
-    color:white;
-  }
-  </style>
-</head>
-<body>
-<%= erb :header %>
+<!-- for graph -->
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="chartkick.js"></script>
   
-<%= line_chart @graph_info,
+<%= line_chart @graph,
 height: "390px",
 library: {
     title: {
@@ -45,37 +28,3 @@ library: {
 } 
 
 %>
-
-<table>
-  <thead id="recent-activity-table-head">
-     <tr>
-      <th class="text-center">Rank</th>
-      <th class="text-center">ID</th>
-      <th class="text-center">Total</th>
-      <th class="text-center">Per day</th>
-      <th class="text-center" colspan="5">Recent</th>
-    </tr>
-  </thead>
-  <tbody id="recent-activity-table-body">
-    <% i = 0 %>
-    <% @info.each do |user| %>
-    <tr>
-      <td class="center"><%= i += 1%></td>
-      <td class="center"><%= user[:name] %></td>
-      <td class="center"><%= user[:solved_sum] %></td>
-      <% spend_day = (Date.today - Date.parse(user[:first_problem]['ac_time'])).to_f%>
-      <% per_day = user[:solved_sum]/spend_day %>
-      <td class="center"><%= "%.2f" % per_day%></td>
-      <% user[:last_problems].each do |problem| %>
-        <td class="<%= problem[:time] %> center">
-        <% sub_domain = problem['id'].split('_')[0..-2].join('-') %>
-        <a href="https://<%= sub_domain %>.contest.atcoder.jp/tasks/<%= problem['id']%>"><%= "#{problem['id'][0..5]} #{problem['id'][-1].upcase}" %></a>
-        </td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-</body>
-</html>

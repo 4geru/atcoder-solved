@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require 'date'
 
 def get_users
   [
@@ -110,6 +111,50 @@ def getResultCount
   }
   return users.sort_by{|k,v| -v }
 end
+
+def getGraph
+  root = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=&rivals='
+  users = get_users
+
+  uri = URI.parse(root + users.join(','))
+  results = JSON.parse(Net::HTTP.get(uri))
+
+  users = users.map{|user| [user, {} ] }.to_h
+  results.map{|problem|  
+    next if problem['result'] != 'AC'
+    user = problem['user_id']
+    time = Time.at(problem['epoch_second'].to_i).to_s[0,10]
+    date = Date.parse(time)
+    users[user][date] = 0 if users[user][date].nil?
+    users[user][date] += 1
+  }
+
+  # 日付順にソート
+  users.map{|user, data|
+    data = data.sort{|(k1, v1), (k2, v2)| k1 <=> k2 }.to_h
+    users[user] = data
+  }
+  # 数え上げ
+  users.map{|user, data|
+    count = 0
+    users[user] = data.map{|date, solved|
+      count += solved
+      [date.to_s, count]
+    }.to_h
+  }
+
+  users = users.map{|user, data|
+    {:name => user, :data => data} 
+  }
+  return users
+end
+# puts getGraph
+# .map{|user, data|
+#   puts user
+#   data.map{|d,c|
+#     puts "#{d} >> #{c}"
+#   }
+# }
 
 # puts getResultCount
 # getProblems('other').map{|k,v|

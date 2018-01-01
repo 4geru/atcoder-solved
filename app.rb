@@ -20,18 +20,10 @@ get '/solved/:contest_id' do
   erb :contest
 end
 
+get '/graph' do
+  @graph = getGraph
+  @users = get_users
 
-
-# hoge 
-# getContests('arc')
-# puts 
-# getContests
-# getContests().each{|contest_id, problems|
-#   puts "#{contest_id}"
-#   problems.each{|problem_id, users|
-#     puts "  #{problem_id[-1]}"
-#     users.map{|info|
-#       puts "    #{info[:user]} #{info[:time].strftime("%Y-%m-%d")}"
-#     }
-#   }
-# }
+  # @contests = getResults('abc')
+  erb :graph
+end
